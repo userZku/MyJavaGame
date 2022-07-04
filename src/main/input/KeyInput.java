@@ -25,7 +25,7 @@ public class KeyInput extends KeyAdapter {
         for (int i = 0; i < handler.getObjects().size(); i++) {
             GameObject tempObject = handler.getObjects().get(i);
             if (tempObject.getID() == ID.Player) {
-                // key event for player 1
+                // key event for player
                 if (key == KeyEvent.VK_Z)
                     tempObject.setVelY(-5);
                 if (key == KeyEvent.VK_S)
@@ -37,6 +37,8 @@ public class KeyInput extends KeyAdapter {
             }
         }
 
+        if (key == KeyEvent.VK_ESCAPE)
+            System.exit(1);
     }
 
     public void keyReleased(KeyEvent e) {
@@ -45,7 +47,7 @@ public class KeyInput extends KeyAdapter {
         for (int i = 0; i < handler.getObjects().size(); i++) {
             GameObject tempObject = handler.getObjects().get(i);
             if (tempObject.getID() == ID.Player) {
-                // key event for player 1
+                // key event for player
                 if (key == KeyEvent.VK_Z)
                     tempObject.setVelY(0);
                 if (key == KeyEvent.VK_S)

@@ -4,15 +4,15 @@ import main.gameObjects.BasicEnemy;
 import main.gameObjects.Handler;
 import main.gameObjects.ID;
 import main.gameObjects.Player;
+import main.gameObjects.Spawner;
 import main.gui.Window;
+import main.gui.HUD;
 import main.input.KeyInput;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
-
-import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 
@@ -23,17 +23,18 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private Handler handler;
-    private Random r;
+    private HUD hud;
+    private Spawner spawner;
 
     public Game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
         new Window(WIDTH, HEIGHT, "My Java Game", this);
-        r = new Random();
+        hud = new HUD();
+        spawner = new Spawner(handler, hud);
 
-        handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player));
-        for (int i = 0; i < 20; i++)
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy));
+        handler.addObject(
+                new Player(WIDTH / 2 - Player.PLAYER_SIZE, HEIGHT / 2 - Player.PLAYER_SIZE, ID.Player, handler));
     }
 
     public synchronized void start() {
@@ -55,6 +56,7 @@ public class Game extends Canvas implements Runnable {
      * Game Loop
      */
     public void run() {
+        this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -86,6 +88,7 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
+        hud.tick();
     }
 
     private void render() {
@@ -100,6 +103,7 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         handler.render(g); // dislay all objects
+        hud.render(g);
 
         g.dispose();
         bs.show();
