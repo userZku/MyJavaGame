@@ -13,6 +13,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
 
@@ -22,6 +23,7 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
+    private Random r = new Random();
     private Handler handler;
     private HUD hud;
     private Spawner spawner;
@@ -35,6 +37,7 @@ public class Game extends Canvas implements Runnable {
 
         handler.addObject(
                 new Player(WIDTH / 2 - Player.PLAYER_SIZE, HEIGHT / 2 - Player.PLAYER_SIZE, ID.Player, handler));
+        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
     }
 
     public synchronized void start() {
@@ -89,6 +92,7 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         hud.tick();
+        spawner.tick();
     }
 
     private void render() {

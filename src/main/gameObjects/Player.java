@@ -19,7 +19,7 @@ public class Player extends GameObject {
 
     private Handler handler;
 
-    public Player(int x, int y, ID id, Handler handler) {
+    public Player(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
     }
@@ -40,18 +40,18 @@ public class Player extends GameObject {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillRect(x, y, PLAYER_SIZE, PLAYER_SIZE);
+        g.fillRect((int) x, (int) y, PLAYER_SIZE, PLAYER_SIZE);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, PLAYER_SIZE, PLAYER_SIZE);
+        return new Rectangle((int) x, (int) y, PLAYER_SIZE, PLAYER_SIZE);
     }
 
     private void collision() {
         for (int i = 0; i < handler.objects.size(); i++) {
             GameObject tempObject = handler.objects.get(i);
-            if (tempObject.getID() == ID.BasicEnemy) {
+            if (tempObject.getID() == ID.BasicEnemy || tempObject.getID() == ID.FastEnemy) {
                 if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH -= 2;
                 }

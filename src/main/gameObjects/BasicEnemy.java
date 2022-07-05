@@ -12,11 +12,11 @@ public class BasicEnemy extends GameObject {
 
     private Handler handler;
 
-    public BasicEnemy(int x, int y, ID id, Handler handler) {
+    public BasicEnemy(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
-        velX = 10;
-        velY = 10;
+        velX = 5;
+        velY = 5;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class BasicEnemy extends GameObject {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.red);
-        g.fillRect(x, y, BASIC_ENEMY_SIZE, BASIC_ENEMY_SIZE);
+        g.fillRect((int) x, (int) y, BASIC_ENEMY_SIZE, BASIC_ENEMY_SIZE);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, BASIC_ENEMY_SIZE, BASIC_ENEMY_SIZE);
+        return new Rectangle((int) x, (int) y, BASIC_ENEMY_SIZE, BASIC_ENEMY_SIZE);
     }
 }
